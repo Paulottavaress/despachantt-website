@@ -15,7 +15,7 @@
 }
 
 .btn-main {
-  color: #333;
+  color: #f4f4f4;
   background-color: green;
 }
 
@@ -58,7 +58,7 @@ input[class^='btn-']:hover {
 }
 
 .lead {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   margin-bottom: 2rem;
 }
 
@@ -113,6 +113,34 @@ input[class^='btn-']:hover {
   background: green;
   display: block;
   margin: 0 auto 1rem auto;
+}
+
+.color-main {
+  color: green;
+}
+
+.color-secondary {
+  color: yellow;
+}
+
+.color-tertiary {
+  color: blue;
+}
+
+.color-attention {
+  color: red;
+}
+
+.color-light {
+  color: #f4f4f4;
+}
+
+.color-medium {
+  color: #ccc;
+}
+
+.color-dark {
+  color: #333;
 }
 
 .items {
@@ -625,7 +653,7 @@ img {
           align-items: center;
 }
 
-#about-d .testimonials p {
+#about-d .testimonials .testimonials-videos {
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 0.5rem;
@@ -731,6 +759,49 @@ img {
 
 #main-footer .footer-content .social .fab:hover {
   background: green;
+}
+
+.payment {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+  grid-gap: 50px;
+}
+
+.payment .payment-area {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-rows: (1fr)[3];
+      grid-template-rows: repeat(3, 1fr);
+}
+
+.payment .payment-area .payment-type {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[2];
+      grid-template-columns: repeat(2, 1fr);
+}
+
+.payment .payment-area .payment-type .payment-price-a {
+  margin: auto;
+}
+
+.payment .payment-area .payment-type .payment-price-b {
+  margin: auto;
+}
+
+.payment .payment-area .payment-button {
+  margin: auto;
+}
+
+.payment .payment-area .payment-button a {
+  font-size: 30px;
+  border-radius: 5px;
+}
+
+.payment .payment-area .payment-warranty {
+  margin: auto;
 }
 
 @media (max-width: 800px) {

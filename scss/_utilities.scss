@@ -17,7 +17,7 @@
 .btn {
   &-main {
     @extend %btn-shared;
-    color: #333;
+    color: $light-color;
     background-color: $main-color;
   }
 
@@ -63,7 +63,7 @@ input[class^='btn-']:hover {
 }
 
 .lead {
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   margin-bottom: 2rem;
 }
 
@@ -118,4 +118,28 @@ input[class^='btn-']:hover {
   background: $main-color;
   display: block;
   margin: 0 auto 1rem auto;
+}
+
+.color{
+  &-main{
+    color: $main-color;
+  }
+  &-secondary{
+    color: $secondary-color;
+  }
+  &-tertiary{
+    color: $tertiary-color;
+  }
+  &-attention{
+    color: $attention-color;
+  }
+  &-light{
+    color: $light-color;
+  }
+  &-medium{
+    color: $medium-color;
+  }
+  &-dark{
+    color: $dark-color;
+  }
 }

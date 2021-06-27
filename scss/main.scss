@@ -363,7 +363,7 @@ img {
         align-items: center;
       }
 
-      p {
+      .testimonials-videos {
         border: 1px solid $medium-color;
         border-radius: 5px;
         padding: 0.5rem;
@@ -460,6 +460,40 @@ img {
       &:hover {
         background: $main-color;
       }
+    }
+  }
+}
+
+// Payment Area
+
+.payment {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 50px;
+  .payment-area{
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    .payment-type{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      .payment-price{
+        &-a{
+          margin:auto;
+        }
+        &-b{
+          margin:auto;
+        }
+      }
+    }
+    .payment-button{
+      margin: auto;
+      a{
+        font-size: 30px;
+        border-radius: 5px;
+      }
+    }
+    .payment-warranty{
+      margin: auto;
     }
   }
 }
