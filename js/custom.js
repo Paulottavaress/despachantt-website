@@ -1,6 +1,7 @@
+payment();
+
 function payment(){
     var address = jQuery('.address').attr("data-address");
-    console.log(address);
     $.ajax({
         url: address + "payment.php",
         type: 'POST',
@@ -42,3 +43,28 @@ function listPaymentMethods(){
         }
     });
 }
+
+$('#cardNum').on('keyup', function() { //Trocar esse código para não ser jquery - parei em 9:25
+    var cardNum = $(this).val();
+    var qntNum = cardNum.length;
+    // Código funciona mas buga - acredito ser lag de att do site
+    document.querySelector('#msg').textContent = "";
+
+    if(qntNum === 6){
+        PagSeguroDirectPayment.getBrand({
+            cardBin: cardNum,
+            success: function(response) {
+                var imgBanner = response.brand.name;
+                $('.card-banner').html("<img src='https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/42x20/"+ imgBanner +".png'>");
+            },
+            error: function(response) {
+                // Código funciona mas buga - acredito ser lag de att do site
+                document.querySelector('.card-banner').textContent = "";
+                document.querySelector('#msg').textContent = "Cartão inválido";
+            },
+            complete: function(response) {
+              //tratamento comum para todas chamadas
+            }
+        });
+    }
+});

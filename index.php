@@ -15,9 +15,16 @@ include './config.php';
     <link rel="stylesheet" href="css/payment.css" />
 </head>
 <body>
-    <button onclick="payment()">Pagar</button>
-    <div class="payment-methods"></div>
+    <!-- <button onclick="payment()">Pagar</button> -->
     <span class="address" data-address="<?php echo URL; ?>"></span>
+    <span id="msg"><span>
+    <form action="">
+        <!-- Lembrar de impedir que o usuário copie e cole nesse campo -->
+        <label>Número do cartão</label>
+        <input type="text" name="cardNum" id="cardNum">
+    </form>
+    <div class="card-banner"></div>
+    <div class="payment-methods"></>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo SCRIPT_PAGSEGURO; ?>"></script>
     <script src="js/custom.js"></script>
