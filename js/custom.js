@@ -41,6 +41,7 @@ function listPaymentMethods(){
         },
         complete: function(response) {
             // Callback para todas chamadas.
+            cardToken();
         }
     });
 }
@@ -62,7 +63,8 @@ $('#cardNum').on('keyup', function() { //Trocar esse código para não ser jquer
             error: function(response) {
                 // Código funciona mas buga - acredito ser lag de att do site
                 //document.querySelector('.card-banner').textContent = "";
-                document.querySelector('#msg').textContent = "Cartão inválido";
+                // Código funciona mas buga - acredito ser lag de att do site
+                //document.querySelector('#msg').textContent = "Cartão inválido";
             },
             complete: function(response) {
               //tratamento comum para todas chamadas
@@ -93,4 +95,27 @@ function installments(imgBrand) {
             // Callback para todas chamadas.
        }
     });
+}
+
+// Retrieve the token from the credit card
+
+function cardToken() {
+    PagSeguroDirectPayment.createCardToken({
+        cardNumber: '4111111111111111', // Número do cartão de crédito
+        brand: 'visa', // Bandeira do cartão
+        cvv: '123', // CVV do cartão
+        expirationMonth: '12', // Mês da expiração do cartão
+        expirationYear: '2030', // Ano da expiração do cartão, é necessário os 4 dígitos.
+        success: function(response) {
+             // Retorna o cartão tokenizado.
+             console.log(response);
+             $('#cardToken').val(response.card.token);
+        },
+        error: function(response) {
+                 // Callback para chamadas que falharam.
+        },
+        complete: function(response) {
+             // Callback para todas chamadas.
+        }
+     });
 }

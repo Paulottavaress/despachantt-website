@@ -21,10 +21,13 @@ include './config.php';
     <form action="">
         <!-- Lembrar de impedir que o usuário copie e cole nesse campo -->
         <label>Número do cartão</label>
-        <input type="text" name="cardNum" id="cardNum">
+        <input type="text" name="cardNum" id="cardNum"><br>
+        <label>Quantidade de parcelas</label>
         <select name="qntInstallments" id="qntInstallments" class="select-qnt-installments">
             <option value="">Selecione</option>
-        </select>
+        </select><br>
+        <label>Token do cartão</label>
+        <input type="text" name="cardToken" id="cardToken">
     </form>
     <div class="card-banner"></div>
     <div class="payment-methods"></>
