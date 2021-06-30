@@ -22,6 +22,9 @@ include './config.php';
         <!-- Lembrar de impedir que o usuário copie e cole nesse campo -->
         <label>Número do cartão</label>
         <input type="text" name="cardNum" id="cardNum">
+        <select name="qntInstallments" id="qntInstallments" class="select-qnt-installments">
+            <option value="">Selecione</option>
+        </select>
     </form>
     <div class="card-banner"></div>
     <div class="payment-methods"></>

@@ -1,3 +1,4 @@
+var amount = "600.00";
 payment();
 
 function payment(){
@@ -17,7 +18,7 @@ function payment(){
 
 function listPaymentMethods(){
     PagSeguroDirectPayment.getPaymentMethods({
-        amount: 500.00,
+        amount: amount,
         success: function(response) {
             //console.log(response);
             $('.payment-methods').append("<div>Cartão de Crédito</div>");  // Título acima das bandeiras
@@ -48,18 +49,19 @@ $('#cardNum').on('keyup', function() { //Trocar esse código para não ser jquer
     var cardNum = $(this).val();
     var qntNum = cardNum.length;
     // Código funciona mas buga - acredito ser lag de att do site
-    document.querySelector('#msg').textContent = "";
+    //document.querySelector('#msg').textContent = "";
 
     if(qntNum === 6){
         PagSeguroDirectPayment.getBrand({
             cardBin: cardNum,
             success: function(response) {
-                var imgBanner = response.brand.name;
-                $('.card-banner').html("<img src='https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/42x20/"+ imgBanner +".png'>");
+                var imgBrand = response.brand.name;
+                $('.card-banner').html("<img src='https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/42x20/"+ imgBrand +".png'>");
+                installments(imgBrand);
             },
             error: function(response) {
                 // Código funciona mas buga - acredito ser lag de att do site
-                document.querySelector('.card-banner').textContent = "";
+                //document.querySelector('.card-banner').textContent = "";
                 document.querySelector('#msg').textContent = "Cartão inválido";
             },
             complete: function(response) {
@@ -68,3 +70,27 @@ $('#cardNum').on('keyup', function() { //Trocar esse código para não ser jquer
         });
     }
 });
+
+// Retrieve the amount of installments and the value of the installments
+
+function installments(imgBrand) {
+    PagSeguroDirectPayment.getInstallments({
+        amount: amount,
+        maxInstallmentNoInterest: 3,
+        brand: imgBrand,
+        success: function(response){
+            $.each(response.installments, function(ia, obja){
+                $.each(obja, function(ib, objb){
+                    var installmentValue = objb.installmentAmount.toFixed(2).replace(".", ",");
+                    $('#qntInstallments').show().append("<option value='" + objb.installmentAmount + "'>" + objb.quantity + " parcelas de R$ " + installmentValue +"</option>");
+                });
+            });
+       },
+        error: function(response) {
+            // callback para chamadas que falharam.
+       },
+        complete: function(response){
+            // Callback para todas chamadas.
+       }
+    });
+}
