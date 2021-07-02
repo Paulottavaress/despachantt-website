@@ -133,4 +133,4 @@ document.getElementById('fullName').addEventListener('focus', function(){
 
 document.getElementById('btnBuy').addEventListener('click', function(e){
     e.preventDefault();
-)};
+});
