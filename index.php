@@ -15,11 +15,12 @@ include './config.php';
     <link rel="stylesheet" href="css/payment.css" />
 </head>
 <body>
-    <!-- <button onclick="payment()">Pagar</button> -->
     <span class="address" data-address="<?php echo URL; ?>"></span>
     <span id="msg"><span>
-    <form action="">
+    <form action="" id="paymentForm">
         <!-- Lembrar de impedir que o usuário copie e cole nesse campo -->
+        <label>Nome completo</label>
+        <input type="text" name="fullName" id="fullName"><br>
         <label>Número do cartão</label>
         <input type="text" name="cardNum" id="cardNum"><br>
         <label>Quantidade de parcelas</label>
@@ -27,7 +28,10 @@ include './config.php';
             <option value="">Selecione</option>
         </select><br>
         <label>Token do cartão</label>
-        <input type="text" name="cardToken" id="cardToken">
+        <input type="text" name="cardToken" id="cardToken"><br>
+        <label>Identificador com os dados do comprador</label>
+        <input type="text" name="cardHash" id="cardHash">
+        <input type="submit" name="btnBuy" id="btnBuy" value="Comprar">
     </form>
     <div class="card-banner"></div>
     <div class="payment-methods"></>

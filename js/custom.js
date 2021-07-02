@@ -98,7 +98,6 @@ function installments(imgBrand) {
 }
 
 // Retrieve the token from the credit card
-
 function cardToken() {
     PagSeguroDirectPayment.createCardToken({
         cardNumber: '4111111111111111', // Número do cartão de crédito
@@ -119,3 +118,19 @@ function cardToken() {
         }
      });
 }
+
+// Retrieve session's hash
+document.getElementById('fullName').addEventListener('focus', function(){
+    PagSeguroDirectPayment.onSenderHashReady(function(response){
+        /*if(response.status == 'error') {
+            console.log(response.message);
+            return false;
+        }*/
+        console.log(response.senderHash); //Hash estará disponível nesta variável.
+        $('#cardHash').val(response.senderHash);
+    });
+});
+
+document.getElementById('btnBuy').addEventListener('click', function(e){
+    e.preventDefault();
+)};
