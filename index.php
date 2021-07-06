@@ -1,5 +1,5 @@
 <?php
-// https://www.youtube.com/watch?v=Z-T1QlJY0jM
+// https://www.youtube.com/watch?v=Agwk70wdrcA&list=PLmY5AEiqDWwD2mkvDEBS9Bqfk95ziKT02&index=7
 include './config.php';
 ?>
 
@@ -17,16 +17,26 @@ include './config.php';
 <body>
     <span class="address" data-address="<?php echo URL; ?>"></span>
     <span id="msg"><span>
-    <form action="" id="paymentForm">
+    <form name="formPagamento" action="" id="paymentForm">
         <!-- Lembrar de impedir que o usuário copie e cole nesse campo -->
         <label>Nome completo</label>
         <input type="text" name="fullName" id="fullName"><br>
         <label>Número do cartão</label>
         <input type="text" name="cardNum" id="cardNum"><br>
+        <label>Bandeira do cartão</label>
+        <input type="text" name="cardBrand" id="cardBrand"><br>
+        <label>CVV do cartão</label>
+        <input type="text" name="cardCVV" id="cardCVV"><br>
+        <label>Mês de validade</label>
+        <input type="text" name="cardMonth" id="cardMonth" placeholder="07" maxlength="2"><br>
+        <label>Ano de validade</label>
+        <input type="text" name="cardYear" id="cardYear" placeholder="2021" maxlength="4"><br>
         <label>Quantidade de parcelas</label>
         <select name="qntInstallments" id="qntInstallments" class="select-qnt-installments">
             <option value="">Selecione</option>
         </select><br>
+        <label>Valor das parcelas</label>
+        <input type="text" name="InstallmentsValue" id="InstallmentsValue"><br>
         <label>Token do cartão</label>
         <input type="text" name="cardToken" id="cardToken"><br>
         <label>Identificador com os dados do comprador</label>

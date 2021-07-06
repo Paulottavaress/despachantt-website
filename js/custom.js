@@ -1,3 +1,6 @@
+// Na aula do link abaixo eu fiz muitas alterações, já que o hash so seria recuperado ao clicar no label do full name
+// https://www.youtube.com/watch?v=uQm8UStWLG8&list=PLmY5AEiqDWwD2mkvDEBS9Bqfk95ziKT02&index=8
+
 var amount = "600.00";
 payment();
 
@@ -41,23 +44,23 @@ function listPaymentMethods(){
         },
         complete: function(response) {
             // Callback para todas chamadas.
-            cardToken();
         }
     });
 }
 
-$('#cardNum').on('keyup', function() { //Trocar esse código para não ser jquery - parei em 9:25
-    var cardNum = $(this).val();
+document.getElementById('cardNum').addEventListener('change', function(e) { //Trocar esse código para não ser jquery - parei em 9:25
+    var cardNum = document.getElementById('cardNum').value;
     var qntNum = cardNum.length;
     // Código funciona mas buga - acredito ser lag de att do site
     //document.querySelector('#msg').textContent = "";
 
-    if(qntNum === 6){
+    if(qntNum >= 6){
         PagSeguroDirectPayment.getBrand({
             cardBin: cardNum,
             success: function(response) {
                 var imgBrand = response.brand.name;
                 $('.card-banner').html("<img src='https://stc.pagseguro.uol.com.br/public/img/payment-methods-flags/42x20/"+ imgBrand +".png'>");
+                $('#cardBrand').val(imgBrand);
                 installments(imgBrand);
             },
             error: function(response) {
@@ -74,7 +77,6 @@ $('#cardNum').on('keyup', function() { //Trocar esse código para não ser jquer
 });
 
 // Retrieve the amount of installments and the value of the installments
-
 function installments(imgBrand) {
     PagSeguroDirectPayment.getInstallments({
         amount: amount,
@@ -84,7 +86,7 @@ function installments(imgBrand) {
             $.each(response.installments, function(ia, obja){
                 $.each(obja, function(ib, objb){
                     var installmentValue = objb.installmentAmount.toFixed(2).replace(".", ",");
-                    $('#qntInstallments').show().append("<option value='" + objb.installmentAmount + "'>" + objb.quantity + " parcelas de R$ " + installmentValue +"</option>");
+                    $('#qntInstallments').show().append("<option value='" + objb.quantity + "' installments-date='" + objb.installmentAmount + "'>" + objb.quantity + " parcelas de R$ " + installmentValue +"</option>");
                 });
             });
        },
@@ -97,17 +99,30 @@ function installments(imgBrand) {
     });
 }
 
+// Retrieve session's hash
+document.getElementById('fullName').addEventListener('focus', function(){
+    PagSeguroDirectPayment.onSenderHashReady(function(response){
+        if(response.status == 'error') {
+            console.log(response.message);
+            return false;
+        } else {
+            $('#cardHash').val(response.senderHash); //Hash estará disponível nesta variável.
+        }
+    });
+});
+
 // Retrieve the token from the credit card
-function cardToken() {
+document.getElementById('btnBuy').addEventListener('click', function(e){  //IMPORTANTE - AQUI O CARA USA A FUNCAO SUBMIT NO FORM DE PAGAMENTO
+    e.preventDefault();
+
     PagSeguroDirectPayment.createCardToken({
-        cardNumber: '4111111111111111', // Número do cartão de crédito
-        brand: 'visa', // Bandeira do cartão
-        cvv: '123', // CVV do cartão
-        expirationMonth: '12', // Mês da expiração do cartão
-        expirationYear: '2030', // Ano da expiração do cartão, é necessário os 4 dígitos.
+        cardNumber: document.getElementById('cardNum').value, // Número do cartão de crédito Test: 4111111111111111
+        brand: document.getElementById('cardBrand').value, // Bandeira do cartão - Test: Visa
+        cvv: document.getElementById('cardCVV').value, // CVV do cartão - Test: 123
+        expirationMonth: document.getElementById('cardMonth').value, // Mês da expiração do cartão - Test: 12
+        expirationYear: document.getElementById('cardYear').value, // Ano da expiração do cartão, é necessário os 4 dígitos - Test: 2030
         success: function(response) {
              // Retorna o cartão tokenizado.
-             console.log(response);
              $('#cardToken').val(response.card.token);
         },
         error: function(response) {
@@ -115,22 +130,18 @@ function cardToken() {
         },
         complete: function(response) {
              // Callback para todas chamadas.
+            formInfo();
         }
      });
-}
-
-// Retrieve session's hash
-document.getElementById('fullName').addEventListener('focus', function(){
-    PagSeguroDirectPayment.onSenderHashReady(function(response){
-        /*if(response.status == 'error') {
-            console.log(response.message);
-            return false;
-        }*/
-        console.log(response.senderHash); //Hash estará disponível nesta variável.
-        $('#cardHash').val(response.senderHash);
-    });
 });
 
-document.getElementById('btnBuy').addEventListener('click', function(e){
-    e.preventDefault();
+// Send the intallment value to the form
+document.getElementById('qntInstallments').addEventListener('change', function(){
+    $('#InstallmentsValue').val($('#qntInstallments').find(':selected').attr('installments-date'));
 });
+
+// Data from the form is serialized
+function formInfo() {
+    var data = $("#paymentForm").serialize();
+    console.log(data);
+};
